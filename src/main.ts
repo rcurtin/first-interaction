@@ -16,11 +16,6 @@ async function run() {
     );
     const context = github.context;
 
-    if (context.payload.action !== 'opened') {
-      console.log('No issue or PR was opened, skipping');
-      return;
-    }
-
     // Do nothing if its not a pr or issue
     const isIssue: boolean = !!context.payload.issue;
     if (!isIssue && !context.payload.pull_request) {
@@ -152,7 +147,7 @@ async function isFirstPull(
 
   for (const pull of pulls) {
     const login = pull.user?.login;
-    if (login === sender && pull.number < curPullNumber) {
+    if (login === sender && pull.number < curPullNumber && pull.merged === true) {
       return false;
     }
   }
