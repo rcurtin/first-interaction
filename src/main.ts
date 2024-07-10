@@ -128,7 +128,7 @@ async function isFirstPull(
   page: number = 1
 ): Promise<boolean> {
   // Provide console output if we loop for a while.
-  console.log('Checking...');
+  console.log(`Checking page ${page} for PR #${curPullNumber} with sender ${sender}...`);
   const {status, data: pulls} = await client.rest.pulls.list({
     owner: owner,
     repo: repo,
@@ -147,7 +147,9 @@ async function isFirstPull(
 
   for (const pull of pulls) {
     const login = pull.user?.login;
+    console.log(`Check PR #${pull.number}, which was done by ${login}.`)
     if (login === sender && pull.number < curPullNumber && pull.merged === true) {
+      console.log(`That's a match!`)
       return false;
     }
   }
