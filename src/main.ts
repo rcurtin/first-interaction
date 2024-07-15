@@ -147,7 +147,7 @@ async function isFirstPull(
 
   for (const pull of pulls) {
     const login = pull.user?.login;
-    console.log(`Check PR #${pull.number}, which was done by ${login}.`)
+    console.log(`Check PR #${pull.number}, which was done by ${login}.  (Looking for ${sender}, ${pull.number} < ${curPullNumber}, and merge ${pull.merged}.)`)
     if (login === sender && pull.number < curPullNumber && pull.merged === true) {
       console.log(`That's a match!`)
       return false;
